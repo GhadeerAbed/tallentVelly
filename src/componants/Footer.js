@@ -1,15 +1,16 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+//import { Link } from 'react-router-dom'
+import  {Footer1,Links}  from "../styled/Container.js";
 const Footer = ({
     paragraph1,
     linkName,
     linkUrl="#"
 }) => {
   return (
-    <div className='flex justify-center  text-sm mt-20'>
+    <Footer1 style={{ 'margin-top': '4rem ' }}>
         <p>{paragraph1}</p>
-        <Link className='text-blue-600 ' to={linkUrl}>{linkName}</Link>
-    </div>
+        <Links to={linkUrl}>{linkName}</Links>
+    </Footer1>
   )
 }
 

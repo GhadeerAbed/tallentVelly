@@ -1,19 +1,23 @@
+import React from 'react'
+import {Button}from '../styled/Container.js'
+import {Link} from 'react-router-dom'
 export default function FormButton({
     handleSubmit,
     action='submit',
-    text
+    text,
+    linkUrl="#"
 }){
+    
     return(
-        <>
-            <button
+        <div>
+            <Button
                 type={action}
-                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-500 focus:outline-none  mt-20"
                 onSubmit={handleSubmit}
             >
 
-                {text}
-            </button>
+               <Link to={linkUrl} >{text}</Link> 
+            </Button>
         
-        </>
+        </div>
     )
 }

@@ -1,13 +1,14 @@
 import React from 'react'
 import logo from '../assest/logo.png'
+import  {Header1,Logo,Title,Paragraph}  from "../styled/Container.js";
 const Header = ({paragraph}) => {
   return (
     <div>
-        <div className='flex flex-col justify-center items-center'>
-        <img src={logo} alt='logo' className='h-25 w-25 '></img>
-        <h1 className="text-3xl font-semibold -mt-7 tracking-wider">Talents Valley</h1>
-        </div>
-        <p className='text-xl font-medium tracking-wide my-10 ml-20 ' >{paragraph}</p>
+        <Header1>
+        <Logo src={logo} alt='logo'></Logo>
+        <Title>Talents Valley</Title>
+        </Header1>
+        <Paragraph>{paragraph}</Paragraph>
     </div>
   )
 }
