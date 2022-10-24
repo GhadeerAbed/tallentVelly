@@ -8,7 +8,8 @@ export default function Input({
   type,
   isRequired = false,
   placeholder,
-  register
+  register,
+  // error
 }) {
   return (
     <div className="my-5">
@@ -16,16 +17,14 @@ export default function Input({
         {labelText}
       </Label>
       <FixedInputClass
-        //  onChange={handleChange}
-        // value={value}
         id={id}
         name={name}
         type={type}
         required={isRequired}
         placeholder={placeholder}
         {...register(name)}
-        // {...register(name)}
       />
+        {/* {error &&  <div >{error.message}</div>}   */}
     </div>
   );
 }

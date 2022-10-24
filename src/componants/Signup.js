@@ -1,39 +1,72 @@
-import React from "react";
+import React, { useState } from "react";
 //import { loginFields } from "../constants/FormFileds";
 import Footer from "./Footer.js";
 import FormButton from "./FormButton.js";
 import Input from "./Input";
-import { Label,FirstLast,Country, Icon } from "../styled/Container";
+import { FirstLast, Icon, Phone, Label,CountrySelect } from "../styled/Container";
+import "react-phone-number-input/style.css";
+import { getCountries} from "react-phone-number-input";
+import en from "react-phone-number-input/locale/en.json";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
 const Signup = () => {
-  
-  // const INITIAL_STATE2 = {
-  //   email: "",
-  //   password: "",
-  //   Firstname:'',
-  //   Lastname:" ",
-  // };
+  const schema1 = yup.object().shape({
+    Firstname: yup.string().required(),
+    Password: yup.string().min(4).max(15).required(),
+    Lastname: yup.string().required(),
+    email: yup.string().email().required(),
+    //  PhoneNumber: yup.string().phone().required(),
+    select : yup.string().required(),
+  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    resolver: yupResolver(schema1),
+  });
 
-  // const [signupState, setSignupState] = useState(INITIAL_STATE2 );
-
-  // const handleChange = (e) =>
-  //   setSignupState({ ...signupState, [e.target.id]: e.target.value });
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log(signupState);
-  //   createAccount();
-  // };
-
-  //handle Signup API Integration here
-  // const createAccount = () => {};
+  const onSubmit1 = (data) => {
+    console.log({ data });
+    reset();
+    const endpoint = "https://talents-valley.herokuapp.com/api/user/signup";
+    fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        Firstname: data.Firstname,
+        Lastname: data.Lastname,
+        email: data.email,
+        password: data.Password,
+        PhoneNumber: data.PhoneNumber,
+        // Country: data.Country,
+      }),
+    })
+      .then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          localStorage.setItem("accessToken", JSON.stringify(data));
+          console.log("sucess");
+        } else {
+          console.log("error");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const [value, setValue] = useState();
+  const [country, setCountry] = useState();
   return (
     <div>
-      <form className="mx-20"  style={{ 'margin-top': '-2rem ' }}>
+      <form className="mx-20" onSubmit={handleSubmit(onSubmit1)}>
         <FirstLast>
-          <div>
           <Input
-            // handleChange={handleChange}
-            // value={signupState.id}
             labelText="Firstname"
             labelFor="Firstname"
             id="Firstname"
@@ -42,13 +75,9 @@ const Signup = () => {
             autoComplete="Firstname"
             isRequired="true"
             placeholder="Enter First name"
-            
+            register={register}
           />
-          </div>
-          <div>
-            <Input
-            // handleChange={handleChange}
-            // value={signupState.id}
+          <Input
             labelText="Lastname"
             labelFor="Lastname"
             id="Lastname"
@@ -57,62 +86,85 @@ const Signup = () => {
             autoComplete="Lastname"
             isRequired="true"
             placeholder="Enter Last name"
+            register={register}
           />
-          </div>
         </FirstLast>
-        <div>
+        <div style={{'marginTop':'-12px'}}>
         <Input
-            // handleChange={handleChange}
-            // value={signupState.id}
-            labelText="Email address"
-            labelFor="email-address"
-            id="email-address"
-            name="email"
-            type="email"
-            autoComplete="email"
-            isRequired="true"
-            placeholder="Email address"
+          // handleChange={handleChange}
+          // value={signupState.id}
+          labelText="Email address"
+          labelFor="email-address"
+          id="email-address"
+          name="email"
+          type="email"
+          autoComplete="email"
+          isRequired="true"
+          placeholder="Email address"
+          register={register}
+        />
+        <Input
+          labelText="Password"
+          labelFor="Password"
+          id="Password"
+          name="Password"
+          type="Password"
+          autoComplete="current-Password"
+          isRequired="true"
+          placeholder="Password"
+          register={register}
+        />
+        <Icon />
+        {errors.Password?.type === "min" && (
+          <p style={{ color: "red" }}>Your password is weak</p>
+        )}
+        {errors.Password?.type === "max" && (
+          <p style={{ color: "green" }}>
+            Nice work. This is an excellent password
+          </p>
+        )}
+       </div>
+        {/* <div>
+            <Label htmlFor="Country">Country</Label>
+            <Country
+              name="Country"
+            >
+              <option></option>
+              <option>USA</option>
+              <option>Palestine</option>
+            </Country>
+          </div> */}
+        <div style={{ marginTop: "35px" }}>
+          <Label htmlFor="PhoneNumber">Phone Number</Label>
+          <Phone
+            name="PhoneNumber"
+            international
+            defaultCountry="PS"
+            value={value}
+            onChange={setValue}
+            required
           />
-          <Input
-            // handleChange={handleChange}
-            // value={signupState.id}
-            labelText="Password"
-            labelFor="Password"
-            id="Password"
-            name="Password"
-            type="Password"
-            autoComplete="current-Password"
-            isRequired="true"
-            placeholder="Password"
-          />
-          <Icon />
-          <Input
-            // handleChange={handleChange}
-            // value={signupState.id}
-            labelText="Phone Number"
-            labelFor="Phone-Number"
-            id="Phone-Number"
-            name="Phone-Number"
-            type="number"
-            autoComplete="Phone-Number"
-            isRequired="true"
-            placeholder="+972"
-          />
-        
-        
-        <div>
-        <Label htmlFor="Country">Country</Label>
-          <Country  >
-          <option></option>
-            <option>USA</option>
-            <option>palestine</option>
-          </Country>
         </div>
-        </div>
-        <FormButton text="Sign In" linkUrl="/"/>
+        <CountrySelect>
+        <Label htmlFor="country">country</Label>
+        <select
+          name = "country"
+          value={country}
+          onChange={(event) => setCountry(event.target.value || undefined)}
+          style={{  'border': '1px solid #BEC2C6','paddingTop': '6px','paddingBottom': '6px','borderRadius': '0.375rem'}}
+        >
+          <option value="">{en["ZZ"]}</option>
+          {getCountries().map((country) => (
+            <option key={country} value={country}>
+              {en[country]}
+            </option>
+          ))} 
+        </select>
+        </CountrySelect>
+        <FormButton text="Sign In" linkUrl="/" />
       </form>
       <Footer
-        paragraph1="Already have an account? "    
+        paragraph1="Already have an account? "
         linkName="Sign in"
         linkUrl="/"
       ></Footer>

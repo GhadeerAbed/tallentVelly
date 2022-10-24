@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
+import PhoneInput from "react-phone-number-input";
 const Container = styled.div`
   margin: 0;
   padding: 0;
@@ -63,6 +64,7 @@ const Label = styled.label`
   color: #707070;
   font-size: 16px;
   font-weight: 500;
+  margin-bottom :5px;
 `;
 const FixedInputClass = styled.input`
   display: block;
@@ -127,6 +129,7 @@ const ForgetPass = styled.span`
 const FirstLast = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-top:-25px
 `;
 const Country = styled.select`
 display: block; 
@@ -194,6 +197,29 @@ const Icon1 = styled.img`
   margin-top: -30px;
   margin-bottom: 20px;
 `;
+const Phone = styled(PhoneInput)`
+.PhoneInputInput{
+  border: 1px solid #BEC2C6;
+  padding: 5px;
+  border-radius:0rem 0.375rem 0.375rem 0rem;
+}
+
+.PhoneInputCountry{
+  border: 1px solid #BEC2C6;
+  margin-right:0px;
+  padding: 5px;
+  border-radius:0.375rem 0rem  0rem 0.375rem ;
+}
+.PhoneInputCountrySelectArrow{
+  visibility: hidden;
+}
+`
+const CountrySelect = styled.div`
+display:flex;
+flex-direction: column;
+margin-top:25px;
+
+`
 export {
   Container,
   Container1,
@@ -218,4 +244,7 @@ export {
   Hesading1,
   Paragraph2,
   Icon1,
+  Phone,
+  CountrySelect,
+  
 };
