@@ -18,10 +18,13 @@ const Email = () => {
   };
   const [userCode, setUserCode] = useState('');
   //  const USER_ID = localStorage.getItem('userid');
+  const savedItem = localStorage.getItem('userid');
+  
 
   const handleSubmit = ({verificationCode,_id}) => {
     verificationCode = otp.join("");
-    _id = localStorage.getItem('userid');
+    _id = JSON.parse(savedItem);
+    // _id = localStorage.getItem('userid');
     console.log(verificationCode);
     const endpoint = `https://talents-valley.herokuapp.com/api/user/password/verify-code`;
     fetch(endpoint, {
@@ -43,9 +46,11 @@ const Email = () => {
         } else {
           console.log("error");
         }
-        response.json().then((resp) => {
+        response.json().then((resp) => {                          
+            JSON.parse(localStorage.getItem("userid"));
+            localStorage.setItem('recoverToken',JSON.stringify(resp.data.recoverToken) );
           console.log(resp);
-           setUserCode(resp.data);
+          //  setUserCode(resp.data);
           // localStorage.setItem("token", JSON.stringify(resp.data.accessToken));
         });
       })
@@ -53,7 +58,6 @@ const Email = () => {
         console.log(error);
       });
   };
-
   return (
     <>
       <Paragraph1>

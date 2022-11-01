@@ -1,15 +1,15 @@
-import React from "react";
+import React,{useState} from "react";
 import Input from "./Input";
 import FormButton from "./FormButton";
-import { Icon ,EroorP} from "../styled/Container";
+import { Icon ,EroorP,Icon2} from "../styled/Container";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 const RePass = () => {
   const schema3 = yup.object().shape({
-    Password: yup.string().min(8).max(15).required(),
-    ConfirmPassword: yup.string().oneOf([yup.ref("Password"),null]),
+    NewPassword: yup.string().min(8).max(15).required(),
+    ConfirmPassword: yup.string().oneOf([yup.ref("NewPassword"),null]),
   });
   const {
     register,
@@ -19,39 +19,77 @@ const RePass = () => {
   } = useForm({
     resolver: yupResolver(schema3),
   });
+  
+  const[passwordEye,setPasswordEye]=useState(false)
+  const handlePassEye =()=>{
+    setPasswordEye(!passwordEye)
+  }
   const onSubmit3 = (data) => {
     console.log({data});
-    reset();
+    // _id = localStorage.getItem('userid');
+  
+    const endpoint = `https://talents-valley.herokuapp.com/api/user/password/recover`;
+    fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // 'Authorization': `Bearer${data['token']}`,
+      },
+      body: JSON.stringify({
+        NewPassword:data.NewPassword,
+        ConfirmPassword:data.ConfirmPassword
+      }),
+    })
+      .then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          // setUser(response.data)
+          console.log("sucess");
+        } else {
+          console.log("error");
+        }
+        response.json().then((resp) => { 
+            JSON.parse(localStorage.getItem("token"));                         
+            JSON.parse(localStorage.getItem("recoverToken"));
+            // localStorage.setItem('userid',JSON.stringify(resp.data.recoverToken) );
+          console.log(resp);
+          //  setUserCode(resp.data);
+          // localStorage.setItem("token", JSON.stringify(resp.data.accessToken));
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
   return (
     <div>
       <form className="mx-20 " onSubmit={handleSubmit(onSubmit3)}>
         <div>
           <Input
-            labelText="Password"
-            labelFor="Password"
-            id="Password"
-            name="Password"
-            type="Password"
+            labelText="New Password"
+            labelFor="NewPassword"
+            id="NewPassword"
+            name="NewPassword"
+            type={(passwordEye===false)?'password':'text'}
             autoComplete="current-Password"
             isRequired="true"
-            placeholder="Password"
+            placeholder="New Password"
             register={register}
           />
-          <Icon />
-          {errors.Password && <EroorP>{errors.Password?.message}</EroorP>}
+           {(passwordEye===false)? <Icon  onClick={handlePassEye}/>:<Icon2 onClick={handlePassEye}></Icon2>}
+          {errors.NewPassword && <EroorP>{errors.NewPassword?.message}</EroorP>}
           <Input
-            labelText="Confirm Password"
+            labelText="Re Enter Password"
             labelFor="Confirm Password"
             id="ConfirmPassword"
             name="ConfirmPassword"
-            type="Password"
+            type={(passwordEye===false)?'password':'text'}
             autoComplete="Confirm Password"
             isRequired="true"
             placeholder="Confirm Password"
             register={register}
           />
-          <Icon />
+           {(passwordEye===false)? <Icon  onClick={handlePassEye}/>:<Icon2 onClick={handlePassEye}></Icon2>}
           {errors.ConfirmPassword && <EroorP>Passwords should match !</EroorP>}
           {/* <p>{errors.ConfirmPassword && "Passwords should match !"}</p> */}
         </div>
