@@ -1,67 +1,110 @@
-import React, { useState } from "react";
-//import { loginFields } from "../constants/FormFileds";
+import React, { useState ,useEffect} from "react";
 import Footer from "./Footer.js";
 import FormButton from "./FormButton.js";
 import Input from "./Input";
-import { FirstLast, Icon, Phone, Label,CountrySelect } from "../styled/Container";
+import { Navigate } from "react-router-dom";
+
+import {
+  FirstLast,
+  Icon,
+  PhoneCountry,
+  Label,
+  CountrySelect,
+  EroorP,
+  SuccessP,
+  Icon2,
+} from "../styled/Container";
 import "react-phone-number-input/style.css";
-import { getCountries} from "react-phone-number-input";
+import { getCountries } from "react-phone-number-input";
 import en from "react-phone-number-input/locale/en.json";
+
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 const Signup = () => {
+  
   const schema1 = yup.object().shape({
-    Firstname: yup.string().required(),
-    Password: yup.string().min(4).max(15).required(),
-    Lastname: yup.string().required(),
+    firstName: yup.string().required(),
+    Password: yup
+      .string()
+      .matches(
+        /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/, ""
+      )
+      .required("Password is required"),
+      lastName: yup.string().required(),
     email: yup.string().email().required(),
-    //  PhoneNumber: yup.string().phone().required(),
-    select : yup.string().required(),
+    // phoneInputWithCountrySelect: yup.string().required(),
+    mobile :yup.string().required(),
+    country: yup.string().required(),
   });
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    control,
   } = useForm({
     resolver: yupResolver(schema1),
   });
-
-  const onSubmit1 = (data) => {
-    console.log({ data });
-    reset();
-    const endpoint = "https://talents-valley.herokuapp.com/api/user/signup";
-    fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        Firstname: data.Firstname,
-        Lastname: data.Lastname,
-        email: data.email,
-        password: data.Password,
-        PhoneNumber: data.PhoneNumber,
-        // Country: data.Country,
-      }),
-    })
-      .then((response) => {
-        console.log(response);
-        if (response.status === 200) {
-          localStorage.setItem("accessToken", JSON.stringify(data));
-          console.log("sucess");
-        } else {
-          console.log("error");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  const [value, setValue] = useState();
+ 
   const [country, setCountry] = useState();
+  const [user, setUser] = useState();
+  const[passwordEye,setPasswordEye]=useState(false)
+  const handlePassEye =()=>{
+    setPasswordEye(!passwordEye)
+  }
+
+  const onSubmit1 = async (data) => {
+    const endpoint = `https://talents-valley.herokuapp.com/api/user/signup`;  
+  fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      'Authorization': `Bearer${data['token']}`,
+    },
+    body: JSON.stringify({
+        email: data.email,
+      password: data.Password,
+      firstName:data.firstName,
+      lastName:data.lastName,
+      country:data.country,
+      mobile:data.mobile
+    }),
+  })
+    .then((response) => {
+       console.log(response);
+       if(response.status === 200){
+        setUser(response.data)
+         console.log("sucess");
+      }else{
+       console.log("error");
+     }
+     response.json()
+     .then((resp)=>{
+      console.log(resp)
+      // localStorage.setItem("token", JSON.stringify(resp.data.accessToken)); 
+    })
+    })
+     .catch((error) => {
+       console.log(error);
+     });
+     reset();
+};
+ 
+useEffect(() => {
+  const loggedInUser = localStorage.getItem("token");
+  if (loggedInUser) {
+    const foundUser = JSON.stringify(loggedInUser);
+    setUser(foundUser);
+  }
+}, []);
+
+if (user) {
+  return <Navigate to="/"/>;
+}
+  
+
   return (
     <div>
       <form className="mx-20" onSubmit={handleSubmit(onSubmit1)}>
@@ -70,7 +113,7 @@ const Signup = () => {
             labelText="Firstname"
             labelFor="Firstname"
             id="Firstname"
-            name="Firstname"
+            name="firstName"
             type="text"
             autoComplete="Firstname"
             isRequired="true"
@@ -81,7 +124,7 @@ const Signup = () => {
             labelText="Lastname"
             labelFor="Lastname"
             id="Lastname"
-            name="Lastname"
+            name="lastName"
             type="text"
             autoComplete="Lastname"
             isRequired="true"
@@ -89,79 +132,84 @@ const Signup = () => {
             register={register}
           />
         </FirstLast>
-        <div style={{'marginTop':'-12px'}}>
-        <Input
-          // handleChange={handleChange}
-          // value={signupState.id}
-          labelText="Email address"
-          labelFor="email-address"
-          id="email-address"
-          name="email"
-          type="email"
-          autoComplete="email"
-          isRequired="true"
-          placeholder="Email address"
-          register={register}
-        />
-        <Input
-          labelText="Password"
-          labelFor="Password"
-          id="Password"
-          name="Password"
-          type="Password"
-          autoComplete="current-Password"
-          isRequired="true"
-          placeholder="Password"
-          register={register}
-        />
-        <Icon />
-        {errors.Password?.type === "min" && (
-          <p style={{ color: "red" }}>Your password is weak</p>
+        <div style={{ marginTop: "-12px" }}>
+          <Input
+            labelText="Email address"
+            labelFor="email-address"
+            id="email-address"
+            name="email"
+            type="email"
+            autoComplete="email"
+            isRequired="true"
+            placeholder="Email address"
+            register={register}
+          />
+          <Input
+            labelText="Password"
+            labelFor="Password"
+            id="Password"
+            name="Password"
+            type={(passwordEye===false)?'password':'text'}
+            autoComplete="current-Password"
+            isRequired="true"
+            placeholder="Password"
+            register={register}
+          />
+         
+        {(passwordEye === true)? <Icon  onClick={handlePassEye}/>:<Icon2 onClick={handlePassEye}></Icon2>}
+
+        {/* {errors.Password && <span >{errors.Password.message}</span>} */}
+         {errors.Password?.type === "matches" &&  (
+          <EroorP>Your password is weak</EroorP>
         )}
-        {errors.Password?.type === "max" && (
-          <p style={{ color: "green" }}>
+        {errors.Password?.type !== "matches" && (
+          <SuccessP>
             Nice work. This is an excellent password
-          </p>
-        )}
-       </div>
-        {/* <div>
-            <Label htmlFor="Country">Country</Label>
-            <Country
-              name="Country"
-            >
-              <option></option>
-              <option>USA</option>
-              <option>Palestine</option>
-            </Country>
-          </div> */}
+          </SuccessP>
+        )}  
+          
+            
+        
+        </div>
+
         <div style={{ marginTop: "35px" }}>
           <Label htmlFor="PhoneNumber">Phone Number</Label>
-          <Phone
-            name="PhoneNumber"
+          <PhoneCountry
             international
             defaultCountry="PS"
-            value={value}
-            onChange={setValue}
-            required
+            // name="phoneInputWithCountrySelect"
+            name = 'mobile'
+            control={control}
+            rules={{ required: true }}
           />
         </div>
+
         <CountrySelect>
-        <Label htmlFor="country">country</Label>
-        <select
-          name = "country"
-          value={country}
-          onChange={(event) => setCountry(event.target.value || undefined)}
-          style={{  'border': '1px solid #BEC2C6','paddingTop': '6px','paddingBottom': '6px','borderRadius': '0.375rem'}}
-        >
-          <option value="">{en["ZZ"]}</option>
-          {getCountries().map((country) => (
-            <option key={country} value={country}>
-              {en[country]}
-            </option>
-          ))} 
-        </select>
+          <Label htmlFor="country">country</Label>
+          <select
+            name="country"
+            value={country}
+            onChange={(event) => setCountry(event.target.value)}
+            style={{
+              border: "1px solid #BEC2C6",
+              paddingTop: "6px",
+              paddingBottom: "6px",
+              borderRadius: "0.375rem",
+              height:'50px',
+              appearance:'none'
+            }}
+            {...register("country")}
+          >
+            <option value=""></option>
+            {getCountries().map((country) => (
+              <option key={country} value={country}>
+                {en[country]}
+              </option>
+            ))}
+          </select>
         </CountrySelect>
-        <FormButton text="Sign In" linkUrl="/" />
+
+        <FormButton text="Sign In" />
       </form>
       <Footer
         paragraph1="Already have an account? "

@@ -7,7 +7,7 @@ const Footer = ({
     linkUrl="#"
 }) => {
   return (
-    <Footer1 style={{ 'margin-top': '4rem ' }}>
+    <Footer1>
         <p>{paragraph1}</p>
         <Links to={linkUrl}>{linkName}</Links>
     </Footer1>

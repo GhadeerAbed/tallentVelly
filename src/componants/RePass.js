@@ -1,14 +1,14 @@
 import React from "react";
 import Input from "./Input";
 import FormButton from "./FormButton";
-import { Icon } from "../styled/Container";
+import { Icon ,EroorP} from "../styled/Container";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 const RePass = () => {
   const schema3 = yup.object().shape({
-    Password: yup.string().min(4).max(15).required(),
+    Password: yup.string().min(8).max(15).required(),
     ConfirmPassword: yup.string().oneOf([yup.ref("Password"),null]),
   });
   const {
@@ -39,7 +39,7 @@ const RePass = () => {
             register={register}
           />
           <Icon />
-          <p>{errors.Password?.message}</p>
+          {errors.Password && <EroorP>{errors.Password?.message}</EroorP>}
           <Input
             labelText="Confirm Password"
             labelFor="Confirm Password"
@@ -52,7 +52,8 @@ const RePass = () => {
             register={register}
           />
           <Icon />
-          <p>{errors.ConfirmPassword && "Passwords should match !"}</p>
+          {errors.ConfirmPassword && <EroorP>Passwords should match !</EroorP>}
+          {/* <p>{errors.ConfirmPassword && "Passwords should match !"}</p> */}
         </div>
         <FormButton text="Continue" linkUrl="/Resetpage" />
       </form>

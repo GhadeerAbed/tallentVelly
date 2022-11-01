@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { AiOutlineEyeInvisible } from "react-icons/ai";
-import PhoneInput from "react-phone-number-input";
+import { AiOutlineEyeInvisible ,AiOutlineEye} from "react-icons/ai";
+import PhoneInputWithCountry from "react-phone-number-input/react-hook-form";
+import correct from '../assest/correct.png'
 const Container = styled.div`
   margin: 0;
   padding: 0;
@@ -47,9 +48,9 @@ const Title = styled.div`
 `;
 const Paragraph = styled.p`
   margin-top: 3rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   margin-left: 5rem;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   line-height: 1.75rem;
   font-weight: 500;
 `;
@@ -62,7 +63,7 @@ const Paragraph1 = styled.p`
 
 const Label = styled.label`
   color: #707070;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 500;
   margin-bottom :5px;
 `;
@@ -72,6 +73,8 @@ const FixedInputClass = styled.input`
   padding-bottom: 0.5rem;
   padding-left: 0.75rem;
   padding-right: 0.75rem;
+  // width:500px;
+  height:50px;
   margin-top: 5px;
   color: #707070;
   width: 100%;
@@ -86,10 +89,10 @@ const FixedInputClass = styled.input`
 
 const Footer1 = styled.div`
   display: flex;
-  margin-top: 5rem;
   font-size: 0.875rem;
   line-height: 1.25rem;
   justify-content: center;
+  margin-bottom: 0.20rem ;
 `;
 const Button = styled.button`
   display: flex;
@@ -99,6 +102,28 @@ const Button = styled.button`
   padding-left: 1rem;
   padding-right: 1rem;
   margin-top: 4rem;
+  margin-bottom: 4rem ;
+  background-color: #4375ff;
+  color: #ffffff;
+  font-size:1.3rem;
+  line-height: 2rem;
+  font-weight: 600;
+  justify-content: center;
+  width: 100%;
+  height:50px;
+  border-radius: 0.375rem;
+  border-width: 1px;
+  border-color: transparent;
+`;
+const Button1 = styled.button`
+  display: flex;
+  position: relative;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-top: 4rem;
+  margin-bottom: 4rem ;
   background-color: #4375ff;
   color: #ffffff;
   font-size: 0.875rem;
@@ -114,22 +139,28 @@ const Links = styled(Link)`
   color: #0044ff;
 `;
 const Icon = styled(AiOutlineEyeInvisible)`
-  margin-top: -48px;
-  margin-left: 93%;
-  color: #bec2c6;
-  font-size: 20px;
+  margin-top: -54px;
+  margin-left: 90%;
+  color: #000000;
+  font-size: 22px;
+`;
+const Icon2 = styled(AiOutlineEye)`
+  margin-top: -54px;
+  margin-left: 90%;
+  color: #000000;
+  font-size: 22px;
 `;
 const ForgetPass = styled.span`
   color: #707070;
   font-size: 16px;
   display: inline-block;
   margin-left: 67.5%;
-  padding-top: 9px;
+  padding-top: 15px;
 `;
 const FirstLast = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top:-25px
+  margin-top:-10px
 `;
 const Country = styled.select`
 display: block; 
@@ -164,19 +195,7 @@ const CodeInput = styled.input`
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   margin-left: 10px;
 `;
-const CodeInput1 = styled.input`
-  padding-top: 0.8rem;
-  padding-bottom: 0.8rem;
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-  color: #374151;
-  line-height: 1.25;
-  width: 3rem;
-  border-radius: 0.25rem;
-  border-width: 1px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  margin-left: 45px;
-`;
+
 const ImgHeding = styled.div`
   display: flex;
   flex-direction: column;
@@ -197,11 +216,13 @@ const Icon1 = styled.img`
   margin-top: -30px;
   margin-bottom: 20px;
 `;
-const Phone = styled(PhoneInput)`
+const PhoneCountry = styled(PhoneInputWithCountry)`
+margin-top:5px;
 .PhoneInputInput{
   border: 1px solid #BEC2C6;
   padding: 5px;
   border-radius:0rem 0.375rem 0.375rem 0rem;
+  height:50px;
 }
 
 .PhoneInputCountry{
@@ -218,8 +239,26 @@ const CountrySelect = styled.div`
 display:flex;
 flex-direction: column;
 margin-top:25px;
-
 `
+const EroorP =styled.p`
+color:#EE404C;
+margin-top:8px;
+&:before  {
+  display: inline;
+  content: "⚠ ";
+}
+`
+const SuccessP = styled.p`
+margin-top:10px;
+display:flex;
+&:before  {
+  display: inline;
+  content: url(${correct});
+  margin-right:5px;
+  
+}
+`
+
 export {
   Container,
   Container1,
@@ -239,12 +278,14 @@ export {
   Container2,
   Paragraph1,
   CodeInput,
-  CodeInput1,
   ImgHeding,
   Hesading1,
   Paragraph2,
   Icon1,
-  Phone,
+  PhoneCountry,
   CountrySelect,
-  
+  EroorP,
+  SuccessP,
+  Icon2,
+  Button1
 };
