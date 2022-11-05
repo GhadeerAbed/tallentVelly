@@ -1,6 +1,6 @@
 import React from 'react'
-import Header from '../componants/Header'
-import Login from '../componants/Login'
+import Header from '../../componants/Login&signup/Header'
+import Login from '../../componants/Login&signup/Login'
 
 const Loginpage = () => {
   return (

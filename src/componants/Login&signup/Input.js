@@ -1,5 +1,5 @@
 import React from 'react'
-import  {FixedInputClass ,Label}  from "../styled/Container.js";
+import{FixedInputClass ,Label}from "../../styled/Container";
 export default function Input({
   labelText,
   labelFor,

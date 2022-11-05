@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Footer from "./Footer";
-import { Paragraph1, CodeInput, Button1 } from "../styled/Container.js";
-// import { useLocation } from "react-router-dom";
+import { Paragraph1, CodeInput, Button1 } from "../../styled/Container.js";
+import { Navigate } from "react-router-dom";
 
 const Email = () => {
   const [otp, setOtp] = useState(new Array(6).fill(""));
@@ -16,15 +16,14 @@ const Email = () => {
       element.nextSibling.focus();
     }
   };
-  const [userCode, setUserCode] = useState('');
-  //  const USER_ID = localStorage.getItem('userid');
-  const savedItem = localStorage.getItem('userid');
-  
+  // const [userCode, setUserCode] = useState('');
+  const USER_ID = JSON.parse(localStorage.getItem("userid"));
 
-  const handleSubmit = ({verificationCode,_id}) => {
+  const [navigate, setNavigate] = useState(false);
+
+  const handleSubmit = ({ verificationCode, _id }) => {
     verificationCode = otp.join("");
-    _id = JSON.parse(savedItem);
-    // _id = localStorage.getItem('userid');
+    _id = USER_ID;
     console.log(verificationCode);
     const endpoint = `https://talents-valley.herokuapp.com/api/user/password/verify-code`;
     fetch(endpoint, {
@@ -38,26 +37,23 @@ const Email = () => {
         verificationCode,
       }),
     })
-      .then((response) => {
-        console.log(response);
-        if (response.status === 200) {
-          // setUser(response.data)
-          console.log("sucess");
-        } else {
-          console.log("error");
-        }
-        response.json().then((resp) => {                          
-            JSON.parse(localStorage.getItem("userid"));
-            localStorage.setItem('recoverToken',JSON.stringify(resp.data.recoverToken) );
-          console.log(resp);
-          //  setUserCode(resp.data);
-          // localStorage.setItem("token", JSON.stringify(resp.data.accessToken));
-        });
+      .then((response) => response.json())
+      .then((resp) => {
+        //  navigate('/Home',{state:{AccessToken:result.data.accessToken}})
+        //  JSON.parse(localStorage.getItem("userid"));
+        console.log(resp);
+        localStorage.setItem(
+          "recoverToken",
+          JSON.stringify(resp.data.recoverToken)
+        );
+        setNavigate(true);
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => console.log(error));
   };
+
+  if (navigate) {
+    return <Navigate to="/RePassPage" />;
+  }
   return (
     <>
       <Paragraph1>
@@ -83,7 +79,7 @@ const Email = () => {
       <Footer
         paragraph1="Didn't get the code?"
         linkName="Resend"
-        linkUrl="/Emailpage "
+        linkUrl="/Emailpage"
       ></Footer>
     </>
   );

@@ -1,6 +1,6 @@
 import React from 'react'
-import Header from '../componants/Header'
-import Signup from '../componants/Signup'
+import Header from '../../componants/Login&signup/Header'
+import Signup from '../../componants/Login&signup/Signup'
 const Signuppage = () => {
   return (
     <div>

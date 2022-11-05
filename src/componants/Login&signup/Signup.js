@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState } from "react";
 import Footer from "./Footer.js";
 import FormButton from "./FormButton.js";
 import Input from "./Input";
@@ -13,7 +13,8 @@ import {
   EroorP,
   SuccessP,
   Icon2,
-} from "../styled/Container";
+  Icon3,
+} from "../../styled/Container";
 import "react-phone-number-input/style.css";
 import { getCountries } from "react-phone-number-input";
 import en from "react-phone-number-input/locale/en.json";
@@ -23,20 +24,19 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 const Signup = () => {
-  
   const schema1 = yup.object().shape({
     firstName: yup.string().required(),
     Password: yup
       .string()
       .matches(
-        /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/, ""
+        /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
+        { excludeEmptyString: false }
       )
       .required("Password is required"),
-      lastName: yup.string().required(),
-    email: yup.string().email().required(),
-    // phoneInputWithCountrySelect: yup.string().required(),
-    mobile :yup.string().required(),
-    country: yup.string().required(),
+    lastName: yup.string().required("lastName is required"),
+    email: yup.string().email().required("email is required"),
+    mobile: yup.string().required(" mobile is required"),
+    country: yup.string().required("country is required"),
   });
   const {
     register,
@@ -47,63 +47,50 @@ const Signup = () => {
   } = useForm({
     resolver: yupResolver(schema1),
   });
- 
+
   const [country, setCountry] = useState();
-  const [user, setUser] = useState();
-  const[passwordEye,setPasswordEye]=useState(false)
-  const handlePassEye =()=>{
-    setPasswordEye(!passwordEye)
-  }
+  // const [user, setUser] = useState();
+  const [navigate, setNavigate] = useState(false);
+  const [passwordEye, setPasswordEye] = useState(false);
+  const handlePassEye = () => {
+    setPasswordEye(!passwordEye);
+  };
 
   const onSubmit1 = async (data) => {
-    const endpoint = `https://talents-valley.herokuapp.com/api/user/signup`;  
-  fetch(endpoint, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      'Authorization': `Bearer${data['token']}`,
-    },
-    body: JSON.stringify({
+    const endpoint = `https://talents-valley.herokuapp.com/api/user/signup`;
+    fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${data["token"]}`,
+      },
+      body: JSON.stringify({
         email: data.email,
-      password: data.Password,
-      firstName:data.firstName,
-      lastName:data.lastName,
-      country:data.country,
-      mobile:data.mobile
-    }),
-  })
-    .then((response) => {
-       console.log(response);
-       if(response.status === 200){
-        setUser(response.data)
-         console.log("sucess");
-      }else{
-       console.log("error");
-     }
-     response.json()
-     .then((resp)=>{
-      console.log(resp)
-      // localStorage.setItem("token", JSON.stringify(resp.data.accessToken)); 
+        password: data.Password,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        country: data.country,
+        mobile: data.mobile,
+      }),
     })
-    })
-     .catch((error) => {
-       console.log(error);
-     });
-     reset();
-};
- 
-useEffect(() => {
-  const loggedInUser = localStorage.getItem("token");
-  if (loggedInUser) {
-    const foundUser = JSON.stringify(loggedInUser);
-    setUser(foundUser);
-  }
-}, []);
+      .then((response) => response.json())
+      .then((resp) => {
+        //  navigate('/Home',{state:{AccessToken:result.data.accessToken}})
+        console.log(resp);
+        localStorage.setItem("token", JSON.stringify(resp.data.accessToken));
+        localStorage.setItem(
+          "refreshToken",
+          JSON.stringify(resp.data.refreshToken)
+        );
+        setNavigate(true);
+      })
+      .catch((error) => console.log(error));
+    reset();
+  };
 
-if (user) {
-  return <Navigate to="/"/>;
-}
-  
+  if (navigate) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div>
@@ -132,7 +119,7 @@ if (user) {
             register={register}
           />
         </FirstLast>
-        <div style={{ marginTop: "-12px" }}>
+        <div style={{ marginTop: "-15px" }}>
           <Input
             labelText="Email address"
             labelFor="email-address"
@@ -149,27 +136,28 @@ if (user) {
             labelFor="Password"
             id="Password"
             name="Password"
-            type={(passwordEye===false)?'password':'text'}
+            type={passwordEye === false ? "password" : "text"}
             autoComplete="current-Password"
             isRequired="true"
             placeholder="Password"
             register={register}
           />
-         
-        {(passwordEye === true)? <Icon  onClick={handlePassEye}/>:<Icon2 onClick={handlePassEye}></Icon2>}
 
-        {/* {errors.Password && <span >{errors.Password.message}</span>} */}
-         {errors.Password?.type === "matches" &&  (
-          <EroorP>Your password is weak</EroorP>
-        )}
-        {errors.Password?.type !== "matches" && (
+          {passwordEye === true ? (
+            <Icon onClick={handlePassEye} />
+          ) : (
+            <Icon2 onClick={handlePassEye}></Icon2>
+          )}
+
+          {errors.Password && <span>{errors.Password.message}</span>}
+          {errors.Password?.type === "matches" && (
+            <EroorP>Your password is weak</EroorP>
+          )}
+          {/* {errors.Password?.type !== "matches" && (
           <SuccessP>
             Nice work. This is an excellent password
           </SuccessP>
-        )}  
-          
-            
-        
+        )}   */}
         </div>
 
         <div style={{ marginTop: "35px" }}>
@@ -178,7 +166,7 @@ if (user) {
             international
             defaultCountry="PS"
             // name="phoneInputWithCountrySelect"
-            name = 'mobile'
+            name="mobile"
             control={control}
             rules={{ required: true }}
           />
@@ -195,8 +183,8 @@ if (user) {
               paddingTop: "6px",
               paddingBottom: "6px",
               borderRadius: "0.375rem",
-              height:'50px',
-              appearance:'none'
+              height: "50px",
+              appearance: "none",
             }}
             {...register("country")}
           >
@@ -207,6 +195,7 @@ if (user) {
               </option>
             ))}
           </select>
+          <Icon3 />
         </CountrySelect>
 
         <FormButton text="Sign In" />

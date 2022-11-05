@@ -1,33 +1,33 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import FormButton from "./FormButton";
-import Input from "./Input";
+import Input from "../../componants/Login&signup/Input";
 // import { useNavigate} from "react-router-dom";
 import { Navigate } from "react-router-dom";
-import { Paragraph1 } from "../styled/Container.js";
+import { Paragraph1 } from "../../styled/Container.js";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 const Forget = () => {
   const schema2 = yup.object().shape({
-    email: yup.string().email().required(),
+    email: yup.string().email().required("email is requird"),
   });
-  
-  const {register,handleSubmit,reset} = useForm({
-      resolver: yupResolver(schema2),
-    }
-  )
-  const [userid, setuserId] = useState('');
+
+  const { register, handleSubmit, reset } = useForm({
+    resolver: yupResolver(schema2),
+  });
+  // const [userid, setuserId] = useState('');
   // const navigate = useNavigate()
 
-//   const tocodepage=()=>{
-//     navigate('/Emailpage',{state:{id:userid}});
-// }
+  //   const tocodepage=()=>{
+  //     navigate('/Emailpage',{state:{id:userid}});
+  // }
 
- 
+  const [navigate, setNavigate] = useState(false);
+
   const onSubmit2 = (data) => {
-    console.log({data});
-    const endpoint = `https://talents-valley.herokuapp.com/api/user/password/forgot`;  
+    console.log({ data });
+    const endpoint = `https://talents-valley.herokuapp.com/api/user/password/forgot`;
     fetch(endpoint, {
       method: "POST",
       headers: {
@@ -35,34 +35,23 @@ const Forget = () => {
         // 'Authorization': `Bearer${data['token']}`,
       },
       body: JSON.stringify({
-      email: data.email,
+        email: data.email,
       }),
     })
-      .then((response) => {
-         console.log(response);
-         if(response.status === 200){
-           console.log("sucess");
-        }else{
-         console.log("error");
-       }
-       response.json()
-      
-       .then((resp)=>{
-        console.log(resp)
-        setuserId(resp.data._id);
-        // localStorage.setItem("token", JSON.stringify(resp.data.accessToken)); 
-         localStorage.setItem('userid',JSON.stringify(resp.data._id) );
+      .then((response) => response.json())
+      .then((resp) => {
+        //  navigate('/Home',{state:{AccessToken:result.data.accessToken}})
+        console.log(resp);
+        localStorage.setItem("userid", JSON.stringify(resp.data._id));
+        setNavigate(true);
       })
-    })
-       .catch((error) => {
-         console.log(error);
-       });
-       reset();
+      .catch((error) => console.log(error));
+    reset();
   };
-   if (userid) {
-    // return tocodepage();
-    <Navigate to="/Emailpage"/>;
-   }
+
+  if (navigate) {
+    return <Navigate to="/Emailpage" />;
+  }
   return (
     <div>
       <Paragraph1>

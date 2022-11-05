@@ -1,15 +1,15 @@
 import "./App.css";
 import React from 'react';
 import {Routes,Route} from  'react-router-dom'
-import Loginpage from './pages/Loginpage.js'
-import Signuppage from './pages/Signuppage'
+import Loginpage from './pages/loginPages/Loginpage'
+import Signuppage from './pages/loginPages/Signuppage'
 import Home from './pages/Home.js'
-import ForgetPassPage  from './pages/ForgetPassPage.js'
+import ForgetPassPage  from './pages/loginPages/ForgetPassPage.js'
 import {Container,Container1}  from "./styled/Container";
-import Emailpage from "./pages/Emailpage";
-import Resetpage from './pages/Resetpage'
-import RePassPage from './pages/RePassPage'
-import ProfilePage from "./pages/ProfilePage";
+import Emailpage from "./pages/loginPages/Emailpage";
+import Resetpage from './pages/loginPages/Resetpage'
+import RePassPage from './pages/loginPages/RePassPage'
+import ProfilePage from "./pages/loginPages/ProfilePage";
 
 
 function App() {

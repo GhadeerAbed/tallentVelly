@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { AiOutlineEyeInvisible ,AiOutlineEye} from "react-icons/ai";
 import PhoneInputWithCountry from "react-phone-number-input/react-hook-form";
 import correct from '../assest/correct.png'
+import {IoIosArrowDown} from 'react-icons/io'
+import {IoIosArrowBack} from "react-icons/io"
+
 const Container = styled.div`
   margin: 0;
   padding: 0;
@@ -24,10 +27,10 @@ const Container1 = styled.div`
   max-width:34rem;
   border-radius: 1rem;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  padding-bottom: 2%;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  
 `;
 const Header1 = styled.div`
   display: flex;
@@ -73,7 +76,6 @@ const FixedInputClass = styled.input`
   padding-bottom: 0.5rem;
   padding-left: 0.75rem;
   padding-right: 0.75rem;
-  // width:500px;
   height:50px;
   margin-top: 5px;
   color: #707070;
@@ -85,6 +87,18 @@ const FixedInputClass = styled.input`
     font-size: 0.875rem;
     line-height: 1.25rem;
   }
+   &:invalid{
+     border-color: red;
+  }
+  &:valid {
+    border-color: grren;
+  }
+  //  &:required{
+  //   border-color: red;
+  //  }
+  // &:required:invalid{
+  //   border-color: blue;
+  // }
 `;
 
 const Footer1 = styled.div`
@@ -92,7 +106,7 @@ const Footer1 = styled.div`
   font-size: 0.875rem;
   line-height: 1.25rem;
   justify-content: center;
-  margin-bottom: 0.20rem ;
+  margin-bottom: 1.7rem ;
 `;
 const Button = styled.button`
   display: flex;
@@ -144,6 +158,7 @@ const Icon = styled(AiOutlineEyeInvisible)`
   color: #000000;
   font-size: 22px;
 `;
+
 const Icon2 = styled(AiOutlineEye)`
   margin-top: -54px;
   margin-left: 90%;
@@ -160,7 +175,7 @@ const ForgetPass = styled.span`
 const FirstLast = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top:-10px
+  margin-top:-15px
 `;
 const Country = styled.select`
 display: block; 
@@ -234,6 +249,17 @@ margin-top:5px;
 .PhoneInputCountrySelectArrow{
   visibility: hidden;
 }
+.PhoneInputCountryIcon--border{
+  background-color:white;
+  width:30px;
+  height:30px;
+}
+.PhoneInputCountryIcon {
+margin-left:10px;
+box-shadow:none;
+}
+
+
 `
 const CountrySelect = styled.div`
 display:flex;
@@ -249,7 +275,7 @@ margin-top:8px;
 }
 `
 const SuccessP = styled.p`
-margin-top:10px;
+margin-top:13px;
 display:flex;
 &:before  {
   display: inline;
@@ -257,6 +283,25 @@ display:flex;
   margin-right:5px;
   
 }
+`
+const ErrorMessage = styled.p`
+color:red;
+margin-top:-25px;
+&:before  {
+  display: inline;
+  content: "⚠ ";
+}
+`
+const Icon3 = styled(IoIosArrowDown)`
+  margin-top: -35px;
+  margin-left: 90.6%;
+  font-size: 21px;
+`;
+const Icon4 = styled(IoIosArrowBack)`
+display: inline-block;
+margin-left: 70px;
+font-size: 25px;
+margin-top: -246px;
 `
 
 export {
@@ -287,5 +332,9 @@ export {
   EroorP,
   SuccessP,
   Icon2,
-  Button1
+  Button1,
+  ErrorMessage,
+  Icon3 ,
+  Icon4 ,
+
 };
