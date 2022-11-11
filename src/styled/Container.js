@@ -1,16 +1,18 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { AiOutlineEyeInvisible ,AiOutlineEye} from "react-icons/ai";
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import PhoneInputWithCountry from "react-phone-number-input/react-hook-form";
-import correct from '../assest/correct.png'
-import {IoIosArrowDown} from 'react-icons/io'
-import {IoIosArrowBack} from "react-icons/io"
+import correct from "../assest/correct.png";
+import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowBack } from "react-icons/io";
 
 const Container = styled.div`
   margin: 0;
   padding: 0;
   display: flex;
   justify-content: center;
+  align-content: center;
+
   @media (min-width: 640px) {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
@@ -23,14 +25,17 @@ const Container = styled.div`
 `;
 const Container1 = styled.div`
   background-color: #ffffff;
-  width: 100%;
-  max-width:34rem;
+  // width: 100%;
+  // min-width: 34rem;
+  width:544px;
   border-radius: 1rem;
+  margin-top: 20%;
+  height:90%;
+  max-height:900px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  
+  @media (min-width: 1700px) and (max-width: 1930px) {
+    max-width: 42rem;
+  }
 `;
 const Header1 = styled.div`
   display: flex;
@@ -68,7 +73,7 @@ const Label = styled.label`
   color: #707070;
   font-size: 17px;
   font-weight: 500;
-  margin-bottom :5px;
+  margin-bottom: 5px;
 `;
 const FixedInputClass = styled.input`
   display: block;
@@ -76,7 +81,7 @@ const FixedInputClass = styled.input`
   padding-bottom: 0.5rem;
   padding-left: 0.75rem;
   padding-right: 0.75rem;
-  height:50px;
+  height: 50px;
   margin-top: 5px;
   color: #707070;
   width: 100%;
@@ -87,18 +92,19 @@ const FixedInputClass = styled.input`
     font-size: 0.875rem;
     line-height: 1.25rem;
   }
-   &:invalid{
-     border-color: red;
-  }
-  &:valid {
-    border-color: grren;
-  }
+  // &:invalid {
+  //   border-color: red;
+  // }
+  // &:valid {
+  //   border-color: grren;
+  // }
   //  &:required{
   //   border-color: red;
   //  }
   // &:required:invalid{
   //   border-color: blue;
   // }
+
 `;
 
 const Footer1 = styled.div`
@@ -106,7 +112,7 @@ const Footer1 = styled.div`
   font-size: 0.875rem;
   line-height: 1.25rem;
   justify-content: center;
-  margin-bottom: 1.7rem ;
+
 `;
 const Button = styled.button`
   display: flex;
@@ -116,15 +122,15 @@ const Button = styled.button`
   padding-left: 1rem;
   padding-right: 1rem;
   margin-top: 4rem;
-  margin-bottom: 4rem ;
+  margin-bottom: 2rem;
   background-color: #4375ff;
   color: #ffffff;
-  font-size:1.3rem;
+  font-size: 1.3rem;
   line-height: 2rem;
   font-weight: 600;
   justify-content: center;
   width: 100%;
-  height:50px;
+  height: 50px;
   border-radius: 0.375rem;
   border-width: 1px;
   border-color: transparent;
@@ -137,12 +143,12 @@ const Button1 = styled.button`
   padding-left: 1rem;
   padding-right: 1rem;
   margin-top: 4rem;
-  margin-bottom: 4rem ;
+  margin-bottom: 4rem;
   background-color: #4375ff;
   color: #ffffff;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 500;
+  font-size: 1.3rem;
+  line-height: 2rem;
+  font-weight: 600;
   justify-content: center;
   width: 100%;
   border-radius: 0.375rem;
@@ -175,7 +181,7 @@ const ForgetPass = styled.span`
 const FirstLast = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top:-15px
+  margin-top: -15px;
 `;
 const Country = styled.select`
 display: block; 
@@ -209,6 +215,9 @@ const CodeInput = styled.input`
   border-width: 1px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   margin-left: 10px;
+  &:nth-of-type(3) {
+    margin-right: 15px;
+  }
 `;
 
 const ImgHeding = styled.div`
@@ -223,86 +232,85 @@ const Hesading1 = styled.h1`
   font-weight: 500;
 `;
 const Paragraph2 = styled.p`
-  font-size: 20px;
+  font-size: 18px;
   margin-top: 5%;
   margin-bottom: 18%;
+  text-align:center;
+  color:#707070;
 `;
 const Icon1 = styled.img`
   margin-top: -30px;
   margin-bottom: 20px;
 `;
 const PhoneCountry = styled(PhoneInputWithCountry)`
-margin-top:5px;
-.PhoneInputInput{
-  border: 1px solid #BEC2C6;
-  padding: 5px;
-  border-radius:0rem 0.375rem 0.375rem 0rem;
-  height:50px;
-}
+  margin-top: 5px;
+  .PhoneInputInput {
+    border: 1px solid #bec2c6;
+    padding: 5px;
+    border-radius: 0rem 0.375rem 0.375rem 0rem;
+    height: 50px;
+  }
 
-.PhoneInputCountry{
-  border: 1px solid #BEC2C6;
-  margin-right:0px;
-  padding: 5px;
-  border-radius:0.375rem 0rem  0rem 0.375rem ;
-}
-.PhoneInputCountrySelectArrow{
-  visibility: hidden;
-}
-.PhoneInputCountryIcon--border{
-  background-color:white;
-  width:30px;
-  height:30px;
-}
-.PhoneInputCountryIcon {
-margin-left:10px;
-box-shadow:none;
-}
-
-
-`
+  .PhoneInputCountry {
+    border: 1px solid #bec2c6;
+    margin-right: 0px;
+    padding: 5px;
+    border-radius: 0.375rem 0rem 0rem 0.375rem;
+  }
+  .PhoneInputCountrySelectArrow {
+    visibility: hidden;
+  }
+  .PhoneInputCountryIcon--border {
+    background-color: white;
+    width: 30px;
+    height: 30px;
+  }
+  .PhoneInputCountryIcon {
+    margin-left: 10px;
+    box-shadow: none;
+  }
+`;
 const CountrySelect = styled.div`
-display:flex;
-flex-direction: column;
-margin-top:25px;
-`
-const EroorP =styled.p`
-color:#EE404C;
-margin-top:8px;
-&:before  {
-  display: inline;
-  content: "⚠ ";
-}
-`
+  display: flex;
+  flex-direction: column;
+  margin-top: 25px;
+`;
+const EroorP = styled.p`
+  color: #ee404c;
+  margin-top: 8px;
+  &:before {
+    display: inline;
+    content: "⚠ ";
+  }
+`;
 const SuccessP = styled.p`
-margin-top:13px;
-display:flex;
-&:before  {
-  display: inline;
-  content: url(${correct});
-  margin-right:5px;
-  
-}
-`
+  margin-top: 13px;
+  display: flex;
+  &:before {
+    display: inline;
+    content: url(${correct});
+    margin-right: 5px;
+  }
+`;
 const ErrorMessage = styled.p`
-color:red;
-margin-top:-25px;
-&:before  {
-  display: inline;
-  content: "⚠ ";
-}
-`
+  color: red;
+  margin-top: -25px;
+  &:before {
+    display: inline;
+    content: "⚠ ";
+  }
+`;
 const Icon3 = styled(IoIosArrowDown)`
   margin-top: -35px;
   margin-left: 90.6%;
   font-size: 21px;
 `;
 const Icon4 = styled(IoIosArrowBack)`
-display: inline-block;
-margin-left: 70px;
-font-size: 25px;
-margin-top: -246px;
-`
+  display: inline-block;
+  margin-left: 70px;
+  font-size: 25px;
+  margin-top: -246px;
+`;
 
 export {
   Container,
@@ -334,7 +342,6 @@ export {
   Icon2,
   Button1,
   ErrorMessage,
-  Icon3 ,
-  Icon4 ,
-
+  Icon3,
+  Icon4,
 };

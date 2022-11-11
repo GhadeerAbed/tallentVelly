@@ -147,7 +147,7 @@ const Login = () => {
           <Link to="/ForgetPasswoed">Forgot Password?</Link>
         </ForgetPass>
         {errorMsg && <ErrorMessage>{errorMsg}</ErrorMessage>}
-        <FormButton text="Sign In" />
+        <FormButton text="Sign In"  />
       </form>
       <Footer
         paragraph1="Don't have an account?"

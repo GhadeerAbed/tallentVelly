@@ -74,7 +74,7 @@ const Email = () => {
         );
       })}
 
-      <p>OTP Entered - {otp.join("")}</p>
+      {/* <p>OTP Entered - {otp.join("")}</p> */}
       <Button1 onClick={handleSubmit}>Continue</Button1>
       <Footer
         paragraph1="Didn't get the code?"

@@ -10,19 +10,20 @@ import Emailpage from "./pages/loginPages/Emailpage";
 import Resetpage from './pages/loginPages/Resetpage'
 import RePassPage from './pages/loginPages/RePassPage'
 import ProfilePage from "./pages/loginPages/ProfilePage";
-
-
+import VerficationPage  from './pages/VerificationPages/VerficationPage'
+import EmailVerifiPage from "./pages/VerificationPages/EmailVerifiPage";
+import PhoneVerificPage from './pages/VerificationPages/PhoneVerificPage'
+import IDVerifiPage from './pages/VerificationPages/IDVerifiPage'
+import AddressVerifiPage from './pages/VerificationPages/AddressVerifiPage'
+import EmailCheckPage  from './pages/VerificationPages/EmailCheckPage'
+import PhoneCheckPage from './pages/VerificationPages/PhoneCheckPage'
 function App() {
-  // const token = localStorage.getItem("token");
-  // if (token) {
-  //     setAuthToken(token);
-  // }
+
 
   return (
     <div>
       <Container>
-    <Container1>
-        <Routes>
+         <Routes>
             <Route path="/" element={<Loginpage/>} />
             <Route exact path="/home" element={<Home/>} />
             <Route path='/signup' element={<Signuppage/>} />
@@ -31,9 +32,16 @@ function App() {
             <Route path ="/Emailpage"  element={<Emailpage />} />
             <Route path ='/RePassPage'  element={<RePassPage/> }/>
             <Route path ='/Resetpage'  element={<Resetpage/> }/>
-        </Routes>
+            <Route path ='/Resetpage'  element={<Resetpage/> }/>
+            <Route path ='/file'  element={<VerficationPage/> }/>
+            <Route path ='/EnailVerifypage'  element={<EmailVerifiPage/> }/>
+            <Route path ='/EmailCheckpage'  element={<EmailCheckPage/> }/>
+            <Route path ='/PhoneVerifiypage'  element={<PhoneVerificPage/> }/>
+            <Route path ='/PhoneCheckpage'  element={<PhoneCheckPage/>}/>
+            <Route path ='/IDVerifiPage'  element={<IDVerifiPage/> }/>
+            <Route path ='/AddressVerifiPage'  element={<AddressVerifiPage/> }/>
+        </Routes> 
 
-    </Container1>         
   </Container>
       
     </div>
