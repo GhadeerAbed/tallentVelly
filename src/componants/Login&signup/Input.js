@@ -1,5 +1,5 @@
-import React from 'react'
-import{FixedInputClass ,Label}from "../../styled/Container";
+import React from "react";
+import { FixedInputClass, Label } from "../../styled/Container";
 export default function Input({
   labelText,
   labelFor,
@@ -9,22 +9,26 @@ export default function Input({
   isRequired = false,
   placeholder,
   register,
-  // error
+  err,
+  customClass,
 }) {
+  const errStyle = {
+    border:'1px solid red'
+  }
   return (
     <div className="my-5">
-      <Label htmlFor={labelFor}>
-        {labelText}
-      </Label>
+      <Label htmlFor={labelFor}>{labelText}</Label>
       <FixedInputClass
+        style={err && errStyle}
         id={id}
         name={name}
         type={type}
         required={isRequired}
         placeholder={placeholder}
         {...register(name)}
+        className={customClass}
       />
-        {/* {error &&  <div >{error.message}</div>}   */}
+      {/* {error &&  <div >{error.message}</div>}   */}
     </div>
   );
 }

@@ -8,70 +8,38 @@ import {
   Icon2,
   ErrorMessage,
 } from "../../styled/Container.js";
-// import axios from "axios";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const schema = yup.object().shape({
+  const schema = yup.object({
     Password: yup.string().min(4).max(15).required("Password is required"),
-    email: yup.string().email().required("Email is required"),
+    // email: yup.string().email().required('email'),
+    email: yup.string().email().required('this field must be an email').trim(),
   });
-  const { register, handleSubmit, reset } = useForm({
+  const { register, handleSubmit, reset , formState: { errors }} = useForm({
     resolver: yupResolver(schema),
   });
-
+  const navigate = useNavigate()
   // const [user, setUser] = useState()
   const [passwordEye, setPasswordEye] = useState(false);
   const handlePassEye = () => {
     setPasswordEye(!passwordEye);
   };
   const [errorMsg, setErrorMsg] = useState();
-  const [navigate, setNavigate] = useState(false);
+  
 
   const onSubmit = (data) => {
-    const endpoint = `https://talents-valley.herokuapp.com/api/user/login`;
-    //   fetch(endpoint, {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       Authorization: `Bearer ${data["token"]}`,
-    //     },
-    //     body: JSON.stringify({
-    //       email: data.email,
-    //       password: data.Password,
-    //     }),
-    //   })
-    //     .then((response) =>{
-    //       if (response?.status === 400) {
-    //         throw new Error("Incorrect email or password")
-    //       }
-    //       else if(response?.status > 400){
-    //         throw new Error("No Server Response")
-    //        }
-    //     response.json()} )
-    //     .then((resp) => {
-    //       console.log(resp);
-    //          localStorage.setItem("token", JSON.stringify(resp.data.accessToken));
-    //          localStorage.getItem("token");
-    //          localStorage.setItem("refreshToken", JSON.stringify(resp.data.refreshToken));
-    //       setNavigate(true);
-    //     })
-    //     .catch((err) =>{
-    //       setErrorMsg(err.message)
-    //     }
-    //     );
-    //   reset();
-    // };
+    const endpoint = `https://talents-valley.herokuapp.com/api/user/login`
 
     fetch(endpoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${data["token"]}`,
+        // Authorization: `Bearer ${data["token"]}`,
       },
       body: JSON.stringify({
         email: data.email,
@@ -81,16 +49,17 @@ const Login = () => {
       .then((response) => response.json())
       .then((resp) => {
         //  navigate('/Home',{state:{AccessToken:result.data.accessToken}})
-        // console.log(resp);
-        // localStorage.setItem("token", JSON.stringify(resp.data.accessToken));
-        // localStorage.setItem(
-        //   "refreshToken",
-        //   JSON.stringify(resp.data.refreshToken)
-        // );
+         console.log(resp);
+        
         if (resp.statusCode >= 400) {
           setErrorMsg(resp.message);
         } else if (resp.statusCode < 400) {
-          setNavigate(true);
+          localStorage.setItem("token",resp.data.accessToken);
+          localStorage.setItem(
+           "refreshToken",
+           resp.data.refreshToken
+          );
+          navigate('/home')
         }
       })
       .catch((error) => {
@@ -98,17 +67,13 @@ const Login = () => {
       });
     reset();
   };
-  // useEffect(() => {
-  //   const loggedInUser = localStorage.getItem("token");
-  //   if (loggedInUser) {
-  //     const foundUser = JSON.stringify(loggedInUser);
-  //     setUser(foundUser);
-  //   }
-  // }, []);
 
-  if (navigate) {
-    return <Navigate to="/home" />;
-  }
+  const erremail = errors.email && errors.email?.message
+  const errpassword = errors.Password && errors.Password?.message
+
+  // if (navigate) {
+  //   return <Navigate to="/home" />;
+  // }
 
   return (
     <div>
@@ -120,15 +85,20 @@ const Login = () => {
             id="email-address"
             name="email"
             type="email"
+            err={erremail || errorMsg}
             autoComplete="email"
             isRequired="true"
             placeholder="Email address"
             register={register}
+            customClass={"hel"}
           />
-
+         {/* {errors.email && <span style={{borderColor:"red",color:"red"}}>{errors.email.message}</span>}  */}
+         
+        {/* {errors.email && <p style={{ color: 'red',marginTop:"-18px" }}>{errors.email?.message}</p>} */}
           <Input
             labelText="Password"
             labelFor="Password"
+            err={errpassword || errorMsg}
             id="Password"
             name="Password"
             type={passwordEye === false ? "password" : "text"}
@@ -146,7 +116,8 @@ const Login = () => {
         <ForgetPass>
           <Link to="/ForgetPasswoed">Forgot Password?</Link>
         </ForgetPass>
-        {errorMsg && <ErrorMessage>{errorMsg}</ErrorMessage>}
+        <div style={{ color: 'red' ,'marginTop': '-23px'}}>{errpassword ? errpassword : errorMsg}</div>
+        {/* {errorMsg && <ErrorMessage>{errorMsg}</ErrorMessage>} */}
         <FormButton text="Sign In"  />
       </form>
       <Footer

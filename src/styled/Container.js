@@ -104,7 +104,7 @@ const FixedInputClass = styled.input`
   // &:required:invalid{
   //   border-color: blue;
   // }
-
+  
 `;
 
 const Footer1 = styled.div`

@@ -5,7 +5,7 @@ import Loginpage from './pages/loginPages/Loginpage'
 import Signuppage from './pages/loginPages/Signuppage'
 import Home from './pages/Home.js'
 import ForgetPassPage  from './pages/loginPages/ForgetPassPage.js'
-import {Container,Container1}  from "./styled/Container";
+import {Container}  from "./styled/Container";
 import Emailpage from "./pages/loginPages/Emailpage";
 import Resetpage from './pages/loginPages/Resetpage'
 import RePassPage from './pages/loginPages/RePassPage'
@@ -33,8 +33,8 @@ function App() {
             <Route path ='/RePassPage'  element={<RePassPage/> }/>
             <Route path ='/Resetpage'  element={<Resetpage/> }/>
             <Route path ='/Resetpage'  element={<Resetpage/> }/>
-            <Route path ='/file'  element={<VerficationPage/> }/>
-            <Route path ='/EnailVerifypage'  element={<EmailVerifiPage/> }/>
+            <Route path ='/Verfication'  element={<VerficationPage/> }/>
+            <Route path ='/EmailVerifypage'  element={<EmailVerifiPage/> }/>
             <Route path ='/EmailCheckpage'  element={<EmailCheckPage/> }/>
             <Route path ='/PhoneVerifiypage'  element={<PhoneVerificPage/> }/>
             <Route path ='/PhoneCheckpage'  element={<PhoneCheckPage/>}/>

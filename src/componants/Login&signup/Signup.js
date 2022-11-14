@@ -30,7 +30,7 @@ const Signup = () => {
       .string()
       .matches(
         /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
-        { excludeEmptyString: false }
+        { excludeEmptyString: false },""
       )
       .required("Password is required"),
     lastName: yup.string().required("lastName is required"),
@@ -62,7 +62,8 @@ const Signup = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${data["token"]}`,
+        "Accept": "application/json",
+        // Authorization: `Bearer ${data["token"]}`,
       },
       body: JSON.stringify({
         email: data.email,
@@ -77,10 +78,10 @@ const Signup = () => {
       .then((resp) => {
         //  navigate('/Home',{state:{AccessToken:result.data.accessToken}})
         console.log(resp);
-        localStorage.setItem("token", JSON.stringify(resp.data.accessToken));
+        localStorage.setItem("token", resp.data.accessToken);
         localStorage.setItem(
           "refreshToken",
-          JSON.stringify(resp.data.refreshToken)
+          resp.data.refreshToken
         );
         setNavigate(true);
       })
@@ -89,7 +90,7 @@ const Signup = () => {
   };
 
   if (navigate) {
-    return <Navigate to="/" />;
+    return <Navigate to="/Verfication" />;
   }
 
   return (
@@ -107,6 +108,7 @@ const Signup = () => {
             placeholder="Enter First name"
             register={register}
           />
+          {/* {errors.firstName && <p style={{ color: 'red' }}>{errors.firstName.message}</p>} */}
           <Input
             labelText="Lastname"
             labelFor="Lastname"
@@ -149,7 +151,7 @@ const Signup = () => {
             <Icon2 onClick={handlePassEye}></Icon2>
           )}
 
-          {errors.Password && <span>{errors.Password.message}</span>}
+          {/* {errors.Password && <span>{errors.Password.message}</span>} */}
           {errors.Password?.type === "matches" && (
             <EroorP>Your password is weak</EroorP>
           )}
