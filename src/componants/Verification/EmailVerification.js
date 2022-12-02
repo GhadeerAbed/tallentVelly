@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{ useState} from "react";
 import HeaderV from "./HeaderV";
 import email from '../../assest/email.png'
 import {CodeInput} from '../../styled/Container'
@@ -32,21 +32,14 @@ const EmailVerification = () => {
       })
       .then((response) => response.json())
       .then((resp) => {
-        //  navigate('/Home',{state:{AccessToken:result.data.accessToken}})
-        //  JSON.parse(localStorage.getItem("userid"));
         console.log(resp);
-        // localStorage.setItem(
-        //   "recoverToken",
-        //   JSON.stringify(resp.data.recoverToken)
-        // );
-        //  setNavigate(true);
         if(resp.statusCode === 200){
         navigate('/EmailCheckpage')
         }
       })
       .catch((error) => console.log(error));
   };
-  
+
   
   return (
     <div>

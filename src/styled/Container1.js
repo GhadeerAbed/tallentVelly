@@ -205,6 +205,11 @@ display: block;
     margin-left: 125px;
     margin-top:-26px
 `
+export const IconUoload1 = styled(MdOutlineFileUpload)`
+display: block;
+    font-size: 27px;
+    position:absolute;
+    `
 export const WidthInput = styled.div`
 width:195px
 `

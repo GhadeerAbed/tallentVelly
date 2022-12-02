@@ -7,7 +7,7 @@ const SelectInput = ({
   option2,
   option3,
   isRequired = false,
-  placeholder,
+  type,
   register,
   name,
   labelFor,
@@ -22,6 +22,7 @@ const SelectInput = ({
       <Select
         name={name}
         required={isRequired}
+        type={type}
         //  defaultValue={placeholder}
         {...register(name)}
       >

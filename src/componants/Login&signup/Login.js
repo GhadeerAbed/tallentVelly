@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const schema = yup.object({
-    Password: yup.string().min(4).max(15).required("Password is required"),
+    Password: yup.string().min(8).required("Password is required"),
     // email: yup.string().email().required('email'),
     email: yup.string().email().required('this field must be an email').trim(),
   });
@@ -55,25 +55,23 @@ const Login = () => {
           setErrorMsg(resp.message);
         } else if (resp.statusCode < 400) {
           localStorage.setItem("token",resp.data.accessToken);
-          localStorage.setItem(
-           "refreshToken",
-           resp.data.refreshToken
-          );
-          navigate('/home')
+          localStorage.setItem("user",JSON.stringify(resp.data.user));
+          localStorage.setItem("refreshToken",resp.data.refreshToken);
+          navigate('/Verfication')
         }
+       
       })
       .catch((error) => {
         console.log(error);
       });
     reset();
   };
-
+  // localStorage.setItem("mobile",resp.data.user.mobile);
+  // localStorage.setItem("emailVerify", resp.data.user.verifiedEmail);
+  // localStorage.setItem("mobileVerify",resp.data.user.verifiedMobile);
+  // localStorage.setItem("email",resp.data.user.email);
   const erremail = errors.email && errors.email?.message
   const errpassword = errors.Password && errors.Password?.message
-
-  // if (navigate) {
-  //   return <Navigate to="/home" />;
-  // }
 
   return (
     <div>

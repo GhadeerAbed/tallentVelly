@@ -12,19 +12,42 @@ import en from "react-phone-number-input/locale/en.json";
 import {Icon3,Label,CountrySelect,Button1} from '../../styled/Container'
 import "react-phone-number-input/style.css";
 const AddressVerification = () => {
-  const schema = yup.object().shape({
-    file:yup.mixed().test('required','Plese select a file',value => {
-      return value && value.length;
-    })
-  })
+  // const schema = yup.object().shape({
+  //   // file:yup.mixed().test('required','Plese select a file',value => {
+  //   //   return value && value.length;
+  //   // })
+  // })
   const { register, handleSubmit, reset ,watch } = useForm({
-    resolver: yupResolver(schema),
+    // resolver: yupResolver(schema),
   });
   const [country, setCountry] = useState();
+  const Submit = (data) => {
+    const formData = new FormData()
+    formData.append('file', data.file[0])
+    formData.append('addressDocumentType', data.addressDocumentType)
+    formData.append('address1', data.address1)
+    formData.append('address2', data.address2)
+    formData.append('city', data.city)
+    formData.append('country', data.country)
+    // for (const k of formData.values()) {
+    //     console.log(k)
+    // }
+    fetch('https://talents-valley.herokuapp.com/api/user/verify/address', {
+        method: 'POST',
+        headers: {
+            "Accept": "application/json",
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: formData
+    })
+        .then((response) => response.json())
+        .then(data => console.log(data))
+        .catch((error) => console.log('error', error));
+}
   return (
     <div>
         <HeaderV img={address} hedding={'Address Verification'} pharginfo={'Upload Document That Proof Your Address Such As: Bill (Phone, Electricity, Water, Bank Statement'}/>
-        <form style={{paddingLeft:'75px',paddingRight:'65px'}} >
+        <form style={{paddingLeft:'75px',paddingRight:'65px'}} onSubmit={handleSubmit(Submit)}>
         <SelectInput
         labelText="Document Type"
         labelFor="Document-Type"
@@ -32,9 +55,9 @@ const AddressVerification = () => {
         isRequired="true"
         register={register}
         option4="Choose your document type"
-        option1="Electricity Bill"
-        option2="Water Bill"
-        option3="Bank Statement"
+        option1="water_bill"
+        option2="bank_statement"
+        option3="phone_bill"
       />
       <div style={{display:'flex',justifyContent: 'space-between',marginTop:'10px'}}>
         <WidthInput>

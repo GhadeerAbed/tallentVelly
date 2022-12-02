@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Footer from "./Footer.js";
 import FormButton from "./FormButton.js";
 import Input from "./Input";
-import { Navigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 
 import {
   FirstLast,
@@ -47,10 +47,8 @@ const Signup = () => {
   } = useForm({
     resolver: yupResolver(schema1),
   });
-
+ const navigate = useNavigate();
   const [country, setCountry] = useState();
-  // const [user, setUser] = useState();
-  const [navigate, setNavigate] = useState(false);
   const [passwordEye, setPasswordEye] = useState(false);
   const handlePassEye = () => {
     setPasswordEye(!passwordEye);
@@ -63,7 +61,6 @@ const Signup = () => {
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        // Authorization: `Bearer ${data["token"]}`,
       },
       body: JSON.stringify({
         email: data.email,
@@ -79,19 +76,17 @@ const Signup = () => {
         //  navigate('/Home',{state:{AccessToken:result.data.accessToken}})
         console.log(resp);
         localStorage.setItem("token", resp.data.accessToken);
+        localStorage.setItem("user", JSON.stringify(resp.data.user));
         localStorage.setItem(
           "refreshToken",
           resp.data.refreshToken
         );
-        setNavigate(true);
+        navigate('/Verfication')
       })
       .catch((error) => console.log(error));
     reset();
   };
 
-  if (navigate) {
-    return <Navigate to="/Verfication" />;
-  }
 
   return (
     <div>
