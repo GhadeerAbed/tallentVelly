@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { Context } from "../Verification/Context";
+// import React, { useContext } from "react";
+// import { Context } from "../Verification/Context";
 import {
   Titleh1,
   Paragraphp,
@@ -8,6 +8,7 @@ import {
   VerifyName,
   Verifyp,
   Pharg1,
+  VerifyButt1
 } from "../../styled/Container1";
 import { Button1 } from "../../styled/Container";
 import { Link } from "react-router-dom";
@@ -15,16 +16,18 @@ import checkL from "../../assest/check-mark.png";
 const Verfication = () => {
   // const { buttonText, buttonText1, verify1, verify, disabled } =
   //   useContext(Context);
-  let user= JSON.parse(localStorage.getItem("user"));
-  let emailV = user.email
+  let user = JSON.parse(localStorage.getItem("user"));
+  let emailV = user.email;
   let localPart = emailV.slice(emailV.indexOf("@") - 3, emailV.indexOf("@"));
-  let phone = user.mobile
+  let phone = user.mobile;
   let localPart1 = phone.slice(0, 4);
   let localPart2 = phone.slice(-3);
   const emailVerify = user.verifiedEmail;
-  const mobileVerify =user.verifiedMobile;
+  const mobileVerify = user.verifiedMobile;
+  const idVerify = user.verifiedId.status;
+  const addressVerify = user.verifiedAddress.status;
   const handleSubmit = () => {
-    const endpoint = `https://talents-valley.herokuapp.com/api/user/send-code-email`;
+    const endpoint = `https://talents-valley-backend.herokuapp.com/api/user/send-code-email`;
     fetch(endpoint, {
       method: "POST",
       headers: {
@@ -40,7 +43,7 @@ const Verfication = () => {
   };
 
   const handleSubmit1 = () => {
-    const endpoint = `https://talents-valley.herokuapp.com/api/user/send-code-mobile`;
+    const endpoint = `https://talents-valley-backend.herokuapp.com/api/user/send-code-mobile`;
     fetch(endpoint, {
       method: "POST",
       headers: {
@@ -66,25 +69,23 @@ const Verfication = () => {
           <VerifyName>Email Address</VerifyName>
           <Verifyp>
             {localPart}@email.com{" "}
-            <span
-              style={{ color:emailVerify === true ? "green": "red" }}
-            >
-              ({emailVerify === true? "verified": "not verified"})
+            <span style={{ color: emailVerify === true ? "green" : "red" }}>
+              ({emailVerify === true ? "verified" : "not verified"})
             </span>
           </Verifyp>
         </div>
         <div onClick={handleSubmit}>
-          {emailVerify === false?(
+          {emailVerify === false ? (
             <VerifyButt>
               <Link to="/EmailVerifypage">verify</Link>
             </VerifyButt>
-          )  :(
+          ) : (
             <img
               src={checkL}
               alt="fd"
               style={{ width: "40px", marginRight: "30px" }}
             />
-          ) }
+          )}
         </div>
       </VerfiyContain>
       <VerfiyContain>
@@ -92,18 +93,16 @@ const Verfication = () => {
           <VerifyName>Phone Number</VerifyName>
           <Verifyp>
             {localPart1}******{localPart2}{" "}
-            <span
-              style={{ color: mobileVerify === true ? "green" : "red" }} 
-            >
-              ({mobileVerify === true ? "verified": "not verified"})
+            <span style={{ color: mobileVerify === true ? "green" : "red" }}>
+              ({mobileVerify === true ? "verified" : "not verified"})
             </span>
           </Verifyp>
         </div>
         <div onClick={handleSubmit1}>
-        {mobileVerify === false? (
+          {mobileVerify === false ? (
             <VerifyButt>
-            <Link to="/PhoneVerifiypage">verify</Link>
-          </VerifyButt>
+              <Link to="/PhoneVerifiypage">verify</Link>
+            </VerifyButt>
           ) : (
             <img
               src={checkL}
@@ -120,9 +119,13 @@ const Verfication = () => {
           <Verifyp>Identity card - Driver license - Passport</Verifyp>
         </div>
         <div>
-          <VerifyButt>
-            <Link to="/IDVerifiPage">verify</Link>
-          </VerifyButt>
+          {idVerify === "pending" ? (
+            <VerifyButt1>Pending</VerifyButt1>
+          ) : (
+            <VerifyButt>
+              <Link to="/IDVerifiPage">verify</Link>
+            </VerifyButt>
+          )}
         </div>
       </VerfiyContain>
       <VerfiyContain>
@@ -133,19 +136,23 @@ const Verfication = () => {
           </Verifyp>
         </div>
         <div>
-          <VerifyButt>
-            <Link to="/AddressVerifiPage">verify</Link>
-          </VerifyButt>
+          {addressVerify === "pending" ? (
+            <VerifyButt1>Pending</VerifyButt1>
+          ) : (
+            <VerifyButt>
+              <Link to="/AddressVerifiPage">verify</Link>
+            </VerifyButt>
+          )}
         </div>
       </VerfiyContain>
       <Button1
         style={{
           width: "424px",
           margin: "40px auto",
-          background: mobileVerify&& emailVerify === "false" ? "#A7BDFB" : "#4375FF",
+          background:
+          emailVerify && mobileVerify !== false ?"#4375FF": "#A7BDFB",
         }}
-        
-        disabled={mobileVerify&& emailVerify}
+        disabled={mobileVerify && emailVerify}
       >
         Continue
       </Button1>

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { NavLink } from 'react-router-dom'
 import {MdOutlineFileUpload} from 'react-icons/md'
+
 export const Nav = styled.nav`
 padding-left: 0.5rem;
 padding-right: 4rem; 
@@ -212,4 +213,11 @@ display: block;
     `
 export const WidthInput = styled.div`
 width:195px
+`
+export const VerifyButt1 = styled.button`
+background-color:#D4D4D4;
+border: 1px solid #E2E2E2;
+border-radius: 7px;
+color:white;
+padding:4px 24px;
 `

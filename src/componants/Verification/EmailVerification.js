@@ -5,6 +5,8 @@ import {CodeInput} from '../../styled/Container'
 import { Button1} from "../../styled/Container";
 import Footer from '../../componants/Login&signup/Footer'
 import { useNavigate } from "react-router-dom";
+
+
 const EmailVerification = () => {
     const navigate = useNavigate()
     const [otp, setOtp] = useState(new Array(6).fill(""));
@@ -19,7 +21,7 @@ const EmailVerification = () => {
     const handleSubmit = (verificationCode) => {
       verificationCode = otp.join("");
      console.log(verificationCode);
-      const endpoint = `https://talents-valley.herokuapp.com/api/user/verify/email`;
+      const endpoint = `https://talents-valley-backend.herokuapp.com/api/user/verify/email`;
       fetch(endpoint, {
         method: "POST",
         headers: {

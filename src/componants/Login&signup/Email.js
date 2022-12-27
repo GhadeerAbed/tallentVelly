@@ -25,7 +25,7 @@ const Email = () => {
     verificationCode = otp.join("");
     _id = USER_ID;
     console.log(verificationCode);
-    const endpoint = `https://talents-valley.herokuapp.com/api/user/password/verify-code`;
+    const endpoint = `https://talents-valley-backend.herokuapp.com/api/user/password/verify-code`;
     fetch(endpoint, {
       method: "POST",
       headers: {
@@ -57,7 +57,7 @@ const Email = () => {
   return (
     <>
       <Paragraph1>
-        We have sent you an email that contains a code to reset your password
+        We have sent you an email that contains a code to reset<br></br> your password
       </Paragraph1>
       {otp.map((data, index) => {
         return (

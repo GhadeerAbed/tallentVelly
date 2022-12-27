@@ -32,7 +32,7 @@ const RePass = () => {
   const onSubmit3 = ({ recoverToken, password }) => {
     // _id = localStorage.getItem('userid');
 
-    const endpoint = `https://talents-valley.herokuapp.com/api/user/password/recover`;
+    const endpoint = `https://talents-valley-backend.herokuapp.com/api/user/password/recover`;
     recoverToken = USER_Recover;
     fetch(endpoint, {
       method: "POST",

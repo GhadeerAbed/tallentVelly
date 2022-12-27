@@ -27,7 +27,7 @@ const Forget = () => {
 
   const onSubmit2 = (data) => {
     console.log({ data });
-    const endpoint = `https://talents-valley.herokuapp.com/api/user/password/forgot`;
+    const endpoint = `https://talents-valley-backend.herokuapp.com/api/user/password/forgot`;
     fetch(endpoint, {
       method: "POST",
       headers: {

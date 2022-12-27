@@ -1,9 +1,9 @@
-import React,{useContext, useEffect} from 'react'
+import React from 'react'
 import HeaderV from './HeaderV'
 import Check from '../../assest/check-mark.png'
 import {Checkp} from '../../styled/Container1'
 import {Button1} from '../../styled/Container'
-import { Context } from "../Verification/Context.js";
+// import { Context } from "../Verification/Context.js";
 import { useNavigate } from 'react-router-dom'
 
 
@@ -14,7 +14,7 @@ const EmailCheck = () => {
   // const {buttonText,setButtonText,setVerifyText} = useContext(Context);
 
   function handleClick() {
-    fetch("https://talents-valley.herokuapp.com/api/settings/profile",{
+    fetch("https://talents-valley-backend.herokuapp.com/api/settings/profile",{
       method: "GET",
       headers: {
       "Content-Type": "application/json",
@@ -24,10 +24,6 @@ const EmailCheck = () => {
     .then((data)=>{
       console.log(data)
        localStorage.setItem("user",JSON.stringify(data.data));
-      //  localStorage.setItem("emailVerify", data.data.verifiedEmail);
-      //  localStorage.setItem("mobileVerify", data.data.verifiedMobile);
-      //  setButtonText(!buttonText);
-      //  setVerifyText("Verified");
       navigate('/Verfication');
     })
     

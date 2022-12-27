@@ -25,9 +25,9 @@ const Container = styled.div`
 `;
 const Container1 = styled.div`
   background-color: #ffffff;
-  // width: 100%;
-  // min-width: 34rem;
-  width:544px;
+   width: 100%;
+   min-width: 34rem;
+  // max-width:544px;
   border-radius: 1rem;
   margin-top: 20%;
   height:90%;
@@ -92,18 +92,7 @@ const FixedInputClass = styled.input`
     font-size: 0.875rem;
     line-height: 1.25rem;
   }
-  // &:invalid {
-  //   border-color: red;
-  // }
-  // &:valid {
-  //   border-color: grren;
-  // }
-  //  &:required{
-  //   border-color: red;
-  //  }
-  // &:required:invalid{
-  //   border-color: blue;
-  // }
+ 
   
 `;
 

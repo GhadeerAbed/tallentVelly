@@ -9,7 +9,7 @@ const PhoneCheck = () => {
   const navigate = useNavigate();
   // const {buttonText1, setVerifyText1,setButtonText1,disabled , setDisabled} = useContext(Context);
   function handleClick1() {
-    fetch("https://talents-valley.herokuapp.com/api/settings/profile",{
+    fetch("https://talents-valley-backend.herokuapp.com/api/settings/profile",{
       method: "GET",
       headers: {
       "Content-Type": "application/json",
@@ -19,10 +19,6 @@ const PhoneCheck = () => {
     .then((data)=>{
       console.log(data)
        localStorage.setItem("user",JSON.stringify(data.data));
-      //  localStorage.setItem("emailVerify", data.data.verifiedEmail);
-      //  localStorage.setItem("mobileVerify", data.data.verifiedMobile);
-      //  setButtonText(!buttonText);
-      //  setVerifyText("Verified");
       navigate('/Verfication');
     })
     

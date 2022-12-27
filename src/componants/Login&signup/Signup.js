@@ -55,7 +55,7 @@ const Signup = () => {
   };
 
   const onSubmit1 = async (data) => {
-    const endpoint = `https://talents-valley.herokuapp.com/api/user/signup`;
+    const endpoint = `https://talents-valley-backend.herokuapp.com/api/user/signup`;
     fetch(endpoint, {
       method: "POST",
       headers: {

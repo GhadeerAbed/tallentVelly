@@ -3,14 +3,13 @@ import { FixedInputClass, Label } from "../../styled/Container";
 export default function Input({
   labelText,
   labelFor,
-  id,
+  // id,
   name,
   type,
   isRequired = false,
   placeholder,
   register,
   err,
-  customClass,
 }) {
   const errStyle = {
     border:'1px solid red'
@@ -20,13 +19,12 @@ export default function Input({
       <Label htmlFor={labelFor}>{labelText}</Label>
       <FixedInputClass
         style={err && errStyle}
-        id={id}
+        // id={id}
         name={name}
         type={type}
         required={isRequired}
         placeholder={placeholder}
         {...register(name)}
-        className={customClass}
       />
       {/* {error &&  <div >{error.message}</div>}   */}
     </div>

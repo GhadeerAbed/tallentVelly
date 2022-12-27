@@ -17,14 +17,12 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const schema = yup.object({
     Password: yup.string().min(8).required("Password is required"),
-    // email: yup.string().email().required('email'),
     email: yup.string().email().required('this field must be an email').trim(),
   });
   const { register, handleSubmit, reset , formState: { errors }} = useForm({
     resolver: yupResolver(schema),
   });
   const navigate = useNavigate()
-  // const [user, setUser] = useState()
   const [passwordEye, setPasswordEye] = useState(false);
   const handlePassEye = () => {
     setPasswordEye(!passwordEye);
@@ -33,8 +31,7 @@ const Login = () => {
   
 
   const onSubmit = (data) => {
-    const endpoint = `https://talents-valley.herokuapp.com/api/user/login`
-
+    const endpoint = `https://talents-valley-backend.herokuapp.com/api/user/login`
     fetch(endpoint, {
       method: "POST",
       headers: {
@@ -88,7 +85,7 @@ const Login = () => {
             isRequired="true"
             placeholder="Email address"
             register={register}
-            customClass={"hel"}
+            // customClass={"hel"}
           />
          {/* {errors.email && <span style={{borderColor:"red",color:"red"}}>{errors.email.message}</span>}  */}
          

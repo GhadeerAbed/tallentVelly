@@ -19,7 +19,7 @@ const PhoneVerification = () => {
     const handleSubmit = (verificationCode) => {
       verificationCode = otp.join("");
      console.log(verificationCode);
-      const endpoint = `https://talents-valley.herokuapp.com/api/user/verify/mobile`;
+      const endpoint = `https://talents-valley-backend.herokuapp.com/api/user/verify/mobile`;
       fetch(endpoint, {
         method: "POST",
         headers: {
