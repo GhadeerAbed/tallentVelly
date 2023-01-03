@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { TableContainer, ListContainer1 } from "../../styled/Container2";
-import { BsThreeDotsVertical } from "react-icons/bs";
-const checkListTag = ["Set as User", "Block", "Delete"];
+import Check from "./Check";
+// import { BsThreeDotsVertical } from "react-icons/bs";
+// const checkListTag = ["Set as User", "Block", "Delete"];
 const Table = ({ data, search }) => {
-  const [openTag, setOpenTag] = useState(false);
+  // const [openTag, setOpenTag] = useState(false);
 
   // const handleClick = () => {
   //   setOpenTag(!openTag);
@@ -50,26 +51,11 @@ const Table = ({ data, search }) => {
                   )}
                 </td>
                 <td> 
-                  <button>
-                    <BsThreeDotsVertical
-                      onClick={() => {
-                        setOpenTag(!openTag);
-                      }}
-                    />
-                  </button>
-                  {openTag ? (
-                    <ListContainer1>
-                      {checkListTag.map((items, index) => (
-                        <div  className="lilist">
-                          <span>{items}</span>
-                        </div>
-                      ))}
-                    </ListContainer1>
-                  ) : null}
-             
+                  <Check/>
                 </td>
               </tr>
             ))}
+      
         </tbody>
       </table>
     </TableContainer>

@@ -129,11 +129,11 @@ export const ListContainer = styled.div`
 export const ListContainer1 = styled.div`
 background-color: #ffffff;
   width: 200px;
-  height: 200px;
+  height: 150px;
   position: absolute;
   right: 0;
-  margin-right: 69px;
-  margin-top: -17px;
+  margin-right: 95px;
+  margin-top: -5px;
   box-shadow: 0px 3px 6px #00000029;
   border: 1px solid #e2e2e2;
   border-radius: 5px;
